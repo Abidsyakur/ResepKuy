@@ -11,48 +11,49 @@
             max-width: 1200px;
             margin: 0 auto;
             padding: 20px;
+            color:black;
             background-color: #f8f9fa;
         }
-        .jumbotron {
+       .jumbotron {
             background-color: #fff;
             padding: 60px;
             margin-bottom: 30px;
             text-align: center;
             box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
         }
-        .card {
+       .card {
             margin-bottom: 20px;
             border: none;
             box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
             background-color: #fff;
         }
-        .card-img-top {
+       .card-img-top {
             width: 100%;
             height: 200px;
             object-fit: cover;
         }
-        .card-body {
+       .card-body {
             padding: 20px;
         }
-        .card-title {
+       .card-title {
             font-size: 24px;
             margin-bottom: 10px;
             color: #4a4a4a;
         }
-        .card-text {
+       .card-text {
             font-size: 16px;
             margin-bottom: 20px;
             color: #6c757d;
         }
-        .btn-primary {
+       .btn-primary {
             background-color: #F4C524;
             border-color: #F4C524;
         }
-        .btn-primary:hover {
+       .btn-primary:hover {
             background-color: #0069d9;
             border-color: #0062cc;
         }
-        .logo {
+       .logo {
             width: 70px;
             height: 70px;
             margin-right: 10px;
@@ -63,47 +64,31 @@
     <div class="container">
         <h1 class="my-4"><img src="logo.png" alt="Logo" class="logo">Resep Kuy</h1>
         <div class="jumbotron">
-            <p>Temukan dan bagikan resep-resep favoritmu dengan komunitas kami.</p>
+            <p>Temukan dan bagikan resep - resep favoritmu dengan komunitas kami.</p>
             <form class="my-4">
                 <div class="input-group">
-                    <input type="text" class="form-control" placeholder="Cari resep...">
-                    <button type="submit" class="btn btn-primary">Cari</button>
+                    <input type="text" id="search-input" class="form-control" placeholder="Cari resep...">
+                    <button type="submit" id="search-button" class="btn btn-primary">Cari</button>
                 </div>
             </form>
             <p>Atau, <a href="#">periksa kategori kami</a> untuk mendapatkan inspirasi.</p>
         </div>
         <div class="row">
+            <% recipes.forEach(recipe => { %>
             <div class="col-md-4">
                 <div class="card">
-                    <img src="https://via.placeholder.com/350x200" class="card-img-top" alt="...">
+                    <img src="<%= recipe.image_recipe %>" class="card-img-top" alt="...">
                     <div class="card-body">
-                        <h5 class="card-title">Resep Cepat dan Mudah</h5>
-                        <p class="card-text">Temukan resep-resep yang mudah dibuat dan tidak memakan waktu lama.</p>
-                        <a href="#" class="btn btn-primary">Lihat</a>
+                        <h5 class="card-title"><%= recipe.title_recipe %></h5>
+                        <p class="card-text"><%= recipe.description_recipe %></p>
+                        <a href="/recipes/<%= recipe.id_recipe %>" class="btn btn-primary">Lihat</a>
                     </div>
                </div>
             </div>
-            <div class="col-md-4">
-                <div class="card">
-                    <img src="https://via.placeholder.com/350x200" class="card-img-top" alt="...">
-                    <div class="card-body">
-                        <h5 class="card-title">Resep Sehat</h5>
-                        <p class="card-text">Cari resep-resep yang baik untukmu dan keluargamu.</p>
-                        <a href="#" class="btn btn-primary">Lihat</a>
-                    </div>
-               </div>
-            </div>
-            <div class="col-md-4">
-                <div class="card">
-                    <img src="https://via.placeholder.com/350x200" class="card-img-top" alt="...">
-                    <div class="card-body">
-                        <h5 class="card-title">Resep Nabati</h5>
-                        <p class="card-text">Coba resep-resep nabati yang lezat untuk setiap kesempatan.</p>
-                        <a href="#" class="btn btn-primary">Lihat</a>
-                    </div>
-                </div>
-            </div>
+            <% }); %>
         </div>
     </div>
+
+<script src="../controllers/search.js"></script>
 </body>
 </html>

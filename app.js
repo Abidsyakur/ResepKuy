@@ -2,6 +2,8 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const path = require('path');
 const app = express();
+const Recipe = require('./model/recipe');
+
 
 // Middleware
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -14,8 +16,14 @@ app.set('views', path.join(__dirname, 'views'));
 app.use(express.static(path.join(__dirname, 'public')));
 
 // Atur rute untuk homepage
-app.get('/', (req, res) => {
-  res.render('index');
+app.get('/', async (req, res) => {
+  // Ambil data recipes dari database
+  const recipes = await Recipe.findAll();
+  console.log('Data Resep:', recipes);
+  // Kirim data recipes ke template EJS
+  res.render('index', {
+    recipes
+  });
 });
 
 //morgan - log server
@@ -24,6 +32,38 @@ const morgan = require('morgan');
 // ...
 
 app.use(morgan('dev'));
+
+//...
+
+app.get('/search', (req, res) => {
+  const searchTerm = req.query.q;
+
+  if (!searchTerm) {
+    res.status(400).json({
+      error: 'No search term provided'
+    });
+    return;
+  }
+
+  Recipe.findAll({
+      where: {
+        title_recipe: {
+          [Op.like]: `%${searchTerm}%`
+        }
+      }
+    })
+    .then((recipes) => {
+      res.json(recipes);
+    })
+    .catch((error) => {
+      res.status(500).json({
+        error: 'Error fetching recipes',
+        message: error.message
+      });
+    });
+});
+
+//...
 
 // Routes
 // const indexRoutes = require('./Routes/indexRoutes');
