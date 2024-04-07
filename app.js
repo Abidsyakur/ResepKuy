@@ -1,4 +1,5 @@
 const express = require('express');
+const session = require('express-session');
 const bodyParser = require('body-parser');
 const path = require('path');
 const app = express();
@@ -15,6 +16,14 @@ app.set('views', path.join(__dirname, 'views'));
 //middleware untuk akses public
 app.use(express.static(path.join(__dirname, 'public')));
 
+// Middleware untuk session (ganti 'secret' dengan nilai rahasia yang aman)
+app.use(session({
+    secret: 'secret',
+    resave: false,
+    saveUninitialized: true,
+    cookie: { secure: false } // Atur ke true jika menggunakan HTTPS
+}));
+
 // Atur rute untuk homepage
 app.get('/', async (req, res) => {
   // Ambil data recipes dari database
@@ -23,6 +32,34 @@ app.get('/', async (req, res) => {
   // Kirim data recipes ke template EJS
   res.render('index', {
     recipes
+  });
+});
+app.get('/login', (req, res) => {
+  res.render('login'); // Halaman login
+});
+
+app.get('/register', (req, res) => {
+  res.render('register'); // Halaman registrasi
+});
+
+app.get('/beranda', async (req, res) => {
+  // Ambil data recipes dari database
+  const recipes = await Recipe.findAll();
+  console.log('Data Resep:', recipes);
+  // Kirim data recipes ke template EJS
+  res.render('beranda', {
+    recipes
+  });
+});
+app.get('/dashboard', async (req, res) => {
+  // Ambil data recipes dari database
+  const recipes = await Recipe.findAll();
+  console.log('Data Resep:', recipes);
+  // Kirim data recipes ke template EJS
+  res.render('dashboard', {
+    recipes, 
+    id_user: req.session.userId, 
+    username : req.session.username
   });
 });
 

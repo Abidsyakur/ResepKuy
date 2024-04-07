@@ -4,12 +4,8 @@ const User = require('../model/users'); // Sesuaikan dengan struktur file Anda
 
 // Fungsi untuk registrasi pengguna baru
 const registerUser = async (req, res) => {
-    const {
-        username,
-        email,
-        password,
-        profile_image
-    } = req.body;
+    const { username, email, password, profile_image } = req.body;
+
     try {
         // Cek apakah email sudah terdaftar
         const existingUser = await User.findOne({
@@ -34,10 +30,17 @@ const registerUser = async (req, res) => {
             profile_image
         });
 
+        // Set session atau kirim token JWT ke klien
+        req.session.userId = newUser.id; // contoh penggunaan session
+        // atau
+        // const token = jwt.sign({ userId: newUser.id }, 'rahasia', { expiresIn: '1h' });
+        // res.status(201).json({ message: 'Registrasi berhasil', token });
+
         res.status(201).json({
             message: 'Registrasi berhasil',
             user: newUser
         });
+        res.redirect('/login');
     } catch (error) {
         res.status(500).json({
             error: 'Gagal melakukan registrasi',
@@ -48,10 +51,8 @@ const registerUser = async (req, res) => {
 
 // Fungsi untuk login pengguna
 const loginUser = async (req, res) => {
-    const {
-        email,
-        password
-    } = req.body;
+    const { email, password } = req.body;
+
     try {
         // Cek apakah pengguna ada dalam database
         const user = await User.findOne({
@@ -73,17 +74,14 @@ const loginUser = async (req, res) => {
             });
         }
 
-        // Buat token autentikasi (JWT)
-        const token = jwt.sign({
-            userId: user.id
-        }, '12345', {
-            expiresIn: '1h'
-        });
+        // Set session atau kirim token JWT ke klien
+        req.session.userId = user.id_user; // contoh penggunaan session
+        req.session.username = user.username; // contoh penggunaan session
+        // atau
+        // const token = jwt.sign({ userId: user.id }, 'rahasia', { expiresIn: '1h' });
+        // res.status(200).json({ message: 'Login berhasil', token });
 
-        res.status(200).json({
-            message: 'Login berhasil',
-            token
-        });
+        res.redirect('/dashboard');
     } catch (error) {
         res.status(500).json({
             error: 'Gagal melakukan login',

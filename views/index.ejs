@@ -58,6 +58,12 @@
             height: 70px;
             margin-right: 10px;
         }
+           .footer {
+            background-color: #F4C524;
+            color: black;
+            text-align: center;
+            padding: 20px 0;
+        }
     </style>
 </head>
 <body>
@@ -67,28 +73,33 @@
             <p>Temukan dan bagikan resep - resep favoritmu dengan komunitas kami.</p>
             <form class="my-4">
                 <div class="input-group">
-                    <input type="text" id="search-input" class="form-control" placeholder="Cari resep...">
+                    <input type="text" id="search-input" class="form-control" placeholder="Cari resep..." >
                     <button type="submit" id="search-button" class="btn btn-primary">Cari</button>
                 </div>
             </form>
             <p>Atau, <a href="#">periksa kategori kami</a> untuk mendapatkan inspirasi.</p>
         </div>
-        <div class="row">
-            <% recipes.forEach(recipe => { %>
-            <div class="col-md-4">
-                <div class="card">
-                    <img src="<%= recipe.image_recipe %>" class="card-img-top" alt="...">
-                    <div class="card-body">
-                        <h5 class="card-title"><%= recipe.title_recipe %></h5>
-                        <p class="card-text"><%= recipe.description_recipe %></p>
-                        <a href="/recipes/<%= recipe.id_recipe %>" class="btn btn-primary">Lihat</a>
-                    </div>
-               </div>
-            </div>
-            <% }); %>
-        </div>
-    </div>
 
-<script src="../controllers/search.js"></script>
+            <div class="container-fluid py-sm-5">
+            <div class="row">
+                <div class="col-md-6">
+                    <img src="foto_resep.jpg" class="img-fluid" alt="Foto Resep">
+                </div>
+                <div class="col-md-6">
+                    <h2>Tentang Komunitas Resep Kuy</h2>
+                    <p>
+                        Resep Kuy adalah platform komunitas untuk berbagi resep dan inspirasi memasak. Bergabunglah dengan kami untuk menemukan resep-resep baru dan terbaik dari para koki amatir hingga profesional.
+                    </p>
+                </div>
+            </div>
+        </div>
+
+    </div>
+        <footer class="footer">
+        <div class="container">
+            <p>&copy; 2024 Cookpad Indonesia - All Rights Reserved</p>
+        </div>
+    </footer>
+
 </body>
 </html>
