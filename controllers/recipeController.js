@@ -34,10 +34,7 @@ const addRecipe = async (req, res) => {
             category_id,
             user_id
         });
-        res.status(201).json({
-            message: 'Resep berhasil ditambahkan',
-            recipe: newRecipe
-        });
+       res.redirect('/dashboard');
     } catch (error) {
         res.status(500).json({
             error: 'Gagal menambahkan resep',

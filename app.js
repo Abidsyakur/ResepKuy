@@ -4,6 +4,7 @@ const bodyParser = require('body-parser');
 const path = require('path');
 const app = express();
 const Recipe = require('./model/recipe');
+const Category = require('./model/categories');
 
 
 // Middleware
@@ -54,10 +55,10 @@ app.get('/beranda', async (req, res) => {
 app.get('/dashboard', async (req, res) => {
   // Ambil data recipes dari database
   const recipes = await Recipe.findAll();
-  console.log('Data Resep:', recipes);
-  // Kirim data recipes ke template EJS
+  const categories = await Category.findAll();
+  // Kirim data categories ke template EJS
   res.render('dashboard', {
-    recipes, 
+    recipes, categories,
     id_user: req.session.userId, 
     username : req.session.username
   });
