@@ -39,6 +39,41 @@
       .nav-link:hover {
             color: #0062cc;
         }
+        .profile-pic {
+  position: relative;
+  top: 10px;
+  right: 20px;
+}
+
+.profile-img {
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+.card {
+  display: flex;
+  flex-basis: calc(50% - 20px);
+  flex-shrink: 0;
+  margin-bottom: 20px;
+}
+
+.card:nth-child(3n+4) {
+  margin-right: 0;
+}
+
+.card:nth-child(n+4) {
+  display: none;
+}
+
+.card:nth-child(-n+3) {
+  display: flex;
+}
+.row {
+  display: flex;
+  justify-content: center;
+}
+
     </style>
 </head>
 
@@ -53,41 +88,52 @@
             <form class="d-flex">
                 <input class="form-control me-2 search-input" id="search-input"  type="search" placeholder="Cari resep..." aria-label="Search">
                 <button class="btn btn-outline-dark" id="search-button" type="submit">Cari</button>
-            </form>
-            <a href="/login">Login</a>
-
-
-        
+            </form> 
     </nav>
 
-            
+<div class="container">
+  <div class="img">
+    <img src="<%= recipe.image_recipe %>" alt="foto resep">
+  </div>
+  <h2 style="color: black;"><%= recipe.title_recipe %></h2>
+  <p><%= recipe.description_recipe %></p>
+  <p><%= recipe.ingredients_recipe %></p>
+  <p><%= recipe.instructions_recipe %></p>
+</div>
        </div>
-        </div>
-
-        <!-- card resep -->
-        <div class="row mt-4">
-            <% recipes.forEach(recipe => { %>
-            <div class="col-md-4">
-                <div class="card">
-                    <img src="<%= recipe.image_recipe %>" class="card-img-top" alt="Resep 1">
-                    <div class="card-body">
-                        <h5 class="recipe-title card-title"><%= recipe.title_recipe %></h5>
-                        <p class="recipe-text card-text"><%= recipe.description_recipe %></p>
-                        <!-- <a href="/recipes/detail/<%= recipe.id_recipe %>" class="btn btn-dark">Lihat Resep</a> -->
-                        <!-- <a href="/recipes/:<%= recipe.id_recipe %>" class="btn btn-dark"><%= recipe.id_recipe %></a> -->
-                         <a href="/recipes/detail/<%= recipe.id_recipe %>" class="btn btn-dark"><%=recipe.id_recipe%></a>
-                        <!-- <a href="/recipeDetail?id=<%= recipe.id_recipe %>" class="btn btn-dark">Detail</a> -->
-                    </div>
-                </div>
-            </div>
-                <% }); %>
-
-               
         </div>
 
      <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js" integrity="sha384-0pUGZvbkm6XF6gxjEnlmuGrJXVbNuzT9qBBavbLwCsOGabYfZo0T0to5eqruptLy" crossorigin="anonymous"></script>
+
+    <script>
+  document.addEventListener('DOMContentLoaded', function() {
+  const searchInput = document.getElementById('search-input');
+  const searchButton = document.getElementById('search-button');
+  const recipeCards = document.querySelectorAll('.card');
+
+  const searchRecipes = (searchTerm) => {
+    recipeCards.forEach(card => {
+      const recipeTitle = card.querySelector('.recipe-title').innerText.toLowerCase();
+      const recipeText = card.querySelector('.recipe-text').innerText.toLowerCase();
+      const cardContainer = card.parentElement.parentElement;
+
+      if (recipeTitle.includes(searchTerm) || recipeText.includes(searchTerm)) {
+        cardContainer.style.display = 'block';
+      } else {
+        cardContainer.style.display = 'none';
+      }
+    });
+  };
+
+  searchInput.addEventListener('input', function() {
+    const searchTerm = searchInput.value.toLowerCase();
+    searchRecipes(searchTerm);
+  });
+});
+</script> 
+
     
 </body>
 

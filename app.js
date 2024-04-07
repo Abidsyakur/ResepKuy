@@ -63,6 +63,17 @@ app.get('/dashboard', async (req, res) => {
     username : req.session.username
   });
 });
+app.get('/recipeDetail', async (req, res) => {
+  // Ambil data recipes dari database
+  const recipes = await Recipe.findAll();
+  const categories = await Category.findAll();
+  // Kirim data categories ke template EJS
+  res.render('recipeDetail', {
+    recipes, categories,
+    id_user: req.session.userId, 
+    username : req.session.username
+  });
+});
 
 //morgan - log server
 const morgan = require('morgan');

@@ -51,6 +51,29 @@
   border-radius: 50%;
   object-fit: cover;
 }
+.card {
+  display: flex;
+  flex-basis: calc(50% - 20px);
+  flex-shrink: 0;
+  margin-bottom: 20px;
+}
+
+.card:nth-child(3n+4) {
+  margin-right: 0;
+}
+
+.card:nth-child(n+4) {
+  display: none;
+}
+
+.card:nth-child(-n+3) {
+  display: flex;
+}
+.row {
+  display: flex;
+  justify-content: center;
+}
+
     </style>
 </head>
 
@@ -139,10 +162,10 @@
         </div>
 
         <!-- card resep -->
+        <% recipes.forEach(recipe => { %>
         <div class="row mt-4">
-            <% recipes.forEach(recipe => { %>
-            <div class="col-md-4">
-                <div class="card">
+          <div class="col-md-4">
+            <div class="card">
                     <img src="<%= recipe.image_recipe %>" class="card-img-top" alt="Resep 1">
                     <div class="card-body">
                         <h5 class="recipe-title card-title"><%= recipe.title_recipe %></h5>
@@ -150,11 +173,11 @@
                         <a href="#" class="btn btn-dark">Lihat resep </a>
                         <p style="color:black"></p>
                     </div>
+                  </div>
                 </div>
-            </div>
-                <% }); %>
-
-        </div>
+                
+              </div>
+              <% }); %>
         
 
      <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
@@ -162,27 +185,30 @@
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js" integrity="sha384-0pUGZvbkm6XF6gxjEnlmuGrJXVbNuzT9qBBavbLwCsOGabYfZo0T0to5eqruptLy" crossorigin="anonymous"></script>
 
     <script>
-    document.addEventListener('DOMContentLoaded', function() {
-        const searchInput = document.getElementById('search-input');
-        const searchButton = document.getElementById('search-button');
-        const recipeCards = document.querySelectorAll('.card');
+      document.addEventListener('DOMContentLoaded', function() {
+  const searchInput = document.getElementById('search-input');
+  const searchButton = document.getElementById('search-button');
+  const recipeCards = document.querySelectorAll('.card');
 
-        searchInput.addEventListener('input', function() {
-            const searchTerm = searchInput.value.toLowerCase();
+  const searchRecipes = (searchTerm) => {
+    recipeCards.forEach(card => {
+      const recipeTitle = card.querySelector('.recipe-title').innerText.toLowerCase();
+      const recipeText = card.querySelector('.recipe-text').innerText.toLowerCase();
+      const cardContainer = card.parentElement.parentElement;
 
-            recipeCards.forEach(card => {
-                const recipeTitle = card.querySelector('.recipe-title').innerText.toLowerCase();
-                const recipeText = card.querySelector('.recipe-text').innerText.toLowerCase();
-                const cardContainer = card.parentElement.parentElement;
-
-                if (recipeTitle.includes(searchTerm) || recipeText.includes(searchTerm) ) {
-                    cardContainer.style.display = 'block';
-                } else {
-                    cardContainer.style.display = 'none';
-                }
-            });
-        });
+      if (recipeTitle.includes(searchTerm) || recipeText.includes(searchTerm)) {
+        cardContainer.style.display = 'block';
+      } else {
+        cardContainer.style.display = 'none';
+      }
     });
+  };
+
+  searchInput.addEventListener('input', function() {
+    const searchTerm = searchInput.value.toLowerCase();
+    searchRecipes(searchTerm);
+  });
+});
 </script> 
 
     

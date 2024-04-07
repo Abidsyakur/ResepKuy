@@ -1,4 +1,5 @@
 const Recipe = require('../model/recipe'); // Sesuaikan path sesuai struktur file Anda
+const Category = require('../model/categories'); // Sesuaikan path sesuai struktur file Anda
 
 // Fungsi untuk mendapatkan semua resep
 const getAllRecipes = async (req, res) => {
@@ -51,13 +52,40 @@ const getRecipeById = async (req, res) => {
     try {
         const recipe = await Recipe.findByPk(id);
         if (recipe) {
-            res.status(200).json(recipe);
+            res.redirect(`/recipes/detail/${recipe.id_resep}`);
         } else {
             res.status(404).json({
                 error: 'Resep tidak ditemukan'
             });
         }
-    } catch (error) {
+    } catch (error) {const addRecipe = async (req, res) => {
+  try {
+    const {
+      title_recipe,
+      description_recipe,
+      ingredients_recipe,
+      instructions_recipe,
+      category_id,
+      user_id
+    } = req.body;
+
+    const recipe = await Recipe.create({
+      title_recipe,
+      description_recipe,
+      ingredients_recipe,
+      instructions_recipe,
+      category_id,
+      user_id
+    });
+
+    res.status(201).json(recipe);
+  } catch (error) {
+    res.status(500).json({
+      error: 'Error adding recipe',
+      message: error.message
+    });
+  }
+};
         res.status(500).json({
             error: 'Gagal mendapatkan resep',
             message: error.message
@@ -134,11 +162,27 @@ const deleteRecipe = async (req, res) => {
         });
     }
 };
+const getRecipeDetail = async (req, res) => {
+    try {
+        const recipe = await Recipe.findByPk(req.params.id);
+        const categories = await Category.findAll(); // Assuming you have a Category model
+        if (recipe && categories) {
+            res.render('recipeDetail', { recipe, categories });
+        } else {
+            res.status(404).json({ error: 'Resep tidak ditemukan' });
+        }
+    } catch (error) {
+        res.status(500).json({ error: 'Gagal mendapatkan data resep', message: error.message });
+    }
+};
+
+
 
 module.exports = {
     getAllRecipes,
     addRecipe,
     getRecipeById,
     updateRecipe,
-    deleteRecipe
+    deleteRecipe,
+    getRecipeDetail
 };
