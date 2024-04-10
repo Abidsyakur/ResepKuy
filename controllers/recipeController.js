@@ -1,5 +1,7 @@
 const Recipe = require('../model/recipe'); // Sesuaikan path sesuai struktur file Anda
 const Category = require('../model/categories'); // Sesuaikan path sesuai struktur file Anda
+const Comment = require('../model/comments'); // Sesuaikan path sesuai struktur file Anda
+const User = require('../model/users'); // Sesuaikan path sesuai struktur file Anda
 
 // Fungsi untuk mendapatkan semua resep
 const getAllRecipes = async (req, res) => {
@@ -162,19 +164,52 @@ const deleteRecipe = async (req, res) => {
         });
     }
 };
+// const getRecipeDetail = async (req, res) => {
+//     try {
+//         const recipe = await Recipe.findByPk(req.params.id);
+//         const categories = await Category.findAll(); // Assuming you have a Category modelif (recipe && categories) {
+        //     res.render('recipeDetail', { recipe, categories });
+        // } else {
+        //     res.status(404).json({ error: 'Resep tidak ditemukan' });
+        // }
+//         if (recipe && categories) {
+//             res.render('recipeDetail', { recipe, categories });
+//         } else {
+//             res.status(404).json({ error: 'Resep tidak ditemukan' });
+//         }
+//     } catch (error) {
+//         res.status(500).json({ error: 'Gagal mendapatkan data resep', message: error.message });
+//     }
+// };
+
 const getRecipeDetail = async (req, res) => {
-    try {
-        const recipe = await Recipe.findByPk(req.params.id);
-        const categories = await Category.findAll(); // Assuming you have a Category model
-        if (recipe && categories) {
-            res.render('recipeDetail', { recipe, categories });
-        } else {
-            res.status(404).json({ error: 'Resep tidak ditemukan' });
-        }
-    } catch (error) {
-        res.status(500).json({ error: 'Gagal mendapatkan data resep', message: error.message });
+  try {
+    const categories = await Category.findAll(); // Mendapatkan semua kategori
+    const recipeId = req.params.id; // Mengambil id_resep dari URL
+
+    // Mendapatkan resep berdasarkan id_resep dan juga mengambil semua komentar yang terkait
+    const recipe = await Recipe.findByPk(recipeId, {
+      include: [
+        {
+          model: Comment,
+          include: [User], // Mengambil informasi pengguna yang membuat komentar
+        },
+      ],
+    });
+
+    if (recipe && categories) {
+      res.render('recipeDetail', { recipe, categories }); // Render halaman detail resep dengan komentar dan kategori
+    } else {
+      res.status(404).json({ error: 'Resep tidak ditemukan' });
     }
+
+  } catch (error) {
+    res.status(500).json({
+      error: error.toString(),
+    });
+  }
 };
+
 
 
 
