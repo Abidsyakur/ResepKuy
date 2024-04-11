@@ -179,11 +179,10 @@ const deleteRecipe = async (req, res) => {
 //         }
 //     } catch (error) {
 //         res.status(500).json({ error: 'Gagal mendapatkan data resep', message: error.message });
-//     }
-// };
 
 const getRecipeDetail = async (req, res) => {
   try {
+    const userId = req.session.userId;
     const categories = await Category.findAll(); // Mendapatkan semua kategori
     const recipeId = req.params.id; // Mengambil id_resep dari URL
 
@@ -197,8 +196,8 @@ const getRecipeDetail = async (req, res) => {
       ],
     });
 
-    if (recipe && categories) {
-      res.render('recipeDetail', { recipe, categories }); // Render halaman detail resep dengan komentar dan kategori
+    if (recipe && categories && userId) {
+        res.render('recipeDetail', { recipe, categories, userId }); // Render halaman detail resep dengan komentar dan kategori
     } else {
       res.status(404).json({ error: 'Resep tidak ditemukan' });
     }
@@ -209,8 +208,6 @@ const getRecipeDetail = async (req, res) => {
     });
   }
 };
-
-
 
 
 module.exports = {

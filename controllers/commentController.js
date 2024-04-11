@@ -28,14 +28,20 @@ const getCommentById = async (req, res) => {
 };
 
 const createComment = async (req, res) => {
-    try {
-        const newComment = await Comment.create(req.body);
-        res.status(201).json(newComment);
-    } catch (error) {
-        res.status(500).json({
-            error: error.toString()
-        });
-    }
+  try {
+    const { content_comment, recipe_id, user_id } = req.body;
+
+    const newComment = await Comment.create({
+      content_comment,
+      recipe_id,
+      user_id,
+    });
+
+    res.locals.success = 'Komentar berhasil ditambahkan';
+    res.redirect('back');
+  } catch (error) {
+    res.status(500).json({ error: error.toString() });
+  }
 };
 
 const updateComment = async (req, res) => {

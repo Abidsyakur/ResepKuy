@@ -19,12 +19,15 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 // Middleware untuk session (ganti 'secret' dengan nilai rahasia yang aman)
 app.use(session({
-    secret: 'secret',
+    secret: 'rahasia',
     resave: false,
     saveUninitialized: true,
-    cookie: { secure: false } // Atur ke true jika menggunakan HTTPS
+    cookie: { secure: false, maxAge: 60000 }
 }));
-
+app.use((req, res, next) => {
+    res.locals.userId = req.session.userId;
+    next();
+});
 // Atur rute untuk homepage
 app.get('/', async (req, res) => {
   // Ambil data recipes dari database

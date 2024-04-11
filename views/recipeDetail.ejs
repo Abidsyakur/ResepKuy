@@ -5,10 +5,13 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Resep Kuy</title>
-        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Pixelify+Sans:wght@400..700&family=Teko:wght@300;400&family=Varela+Round&display=swap" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
     <style>
         body {
-            font-family: Arial, sans-serif;
+            font-family: "Varela Round", sans-serif;
             max-width: 1200px;
             margin: 0 auto;
             padding: 20px;
@@ -16,68 +19,82 @@
             background-color: #f8f9fa;
         }
 
-      .navbar {
+        .navbar {
             background-color: #F4C524;
             padding: 10px;
         }
 
-      .navbar-brand img {
+        .navbar-brand img {
             width: 50px;
             height: auto;
             margin-right: 10px;
         }
 
-      .search-input {
+        .search-input {
             width: 300px;
             margin-right: 10px;
         }
 
-      .nav-link {
+        .nav-link {
             color: black;
         }
 
-      .nav-link:hover {
+        .nav-link:hover {
             color: #0062cc;
         }
-        .profile-pic {
-  position: relative;
-  top: 10px;
-  right: 20px;
-}
 
-.profile-img {
-  width: 20px;
-  height: 20px;
-  border-radius: 50%;
-  object-fit: cover;
-}
-.card {
-  display: flex;
-  flex-basis: calc(50% - 20px);
-  flex-shrink: 0;
-  margin-bottom: 20px;
-}
+        .comment {
+            margin-bottom: 10px;
+            border: 1px solid #ddd;
+            padding: 10px;
+            border-radius: 5px;
+        }
 
-.card:nth-child(3n+4) {
-  margin-right: 0;
-}
-
-.card:nth-child(n+4) {
-  display: none;
-}
-
-.card:nth-child(-n+3) {
-  display: flex;
-}
-.row {
-  display: flex;
-  justify-content: center;
-}
-
+        .comment p {
+            margin: 0;
+        }
+        .jumbotron0 {
+            background-color: #fff;
+            padding: 60px;
+            margin-bottom: 30px;
+            text-align: left;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        .jumbotron1 {
+            background-color: #fff;
+            padding: 60px;
+            margin-bottom: 30px;
+            text-align: left;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        .jumbotron2 {
+            background-color: #fff;
+            padding: 60px;
+            margin-bottom: 30px;
+            text-align: left;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        .jumbotron3{
+            background-color: #fff;
+            padding: 60px;
+            margin-bottom: 30px;
+            text-align: left;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        .jumbotron4 {
+            background-color: #fff;
+            padding: 60px;
+            margin-bottom: 30px;
+            text-align: left;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
     </style>
 </head>
 
 <body>
+     <% if (locals.success) { %>
+        <p><%= locals.success %></p>
+    <% } %>
     <nav class="navbar navbar-expand-lg navbar-light ">
         <div class="container-fluid justify-content-between">
             <a class="navbar-brand" href="#"><img src="logo.png" alt="ResepKuy"></a>
@@ -85,65 +102,94 @@
                 <span class="navbar-toggler-icon"></span>
             </button>
             <form class="d-flex">
-                <input class="form-control me-2 search-input" id="search-input"  type="search" placeholder="Cari resep..." aria-label="Search">
+                <input class="form-control me-2 search-input" id="search-input" type="search" placeholder="Cari resep..." aria-label="Search">
                 <button class="btn btn-outline-dark" id="search-button" type="submit">Cari</button>
-            </form> 
+            </form>
+        </div>
     </nav>
-        <div class="container">
-        <div class="img">
+    <div class="container">
+        <div class="jumbotron0">
             <img src="<%= recipe.image_recipe %>" alt="foto resep">
         </div>
-        <h2 style="color: black;"><%= recipe.title_recipe %></h2>
-        <p><%= recipe.description_recipe %></p>
-        <p><%= recipe.ingredients_recipe %></p>
-        <p><%= recipe.instructions_recipe %></p>
+        <div class="jumbotron1">
+            <h2 style="color: black;"><%= recipe.title_recipe %></h2>
         </div>
-
-      <h3>Komentar</h3>
-    <% if (recipe.Comments.length > 0) { %>
-        <% recipe.Comments.forEach(comment => { %>
-            <div class="comment">
-                <p><strong><%= comment.User.username %>:</strong> <%= comment.content_comment %></p>
+        <div class="jumbotron2">
+            <p><%= recipe.description_recipe %></p>
+        </div>
+        <div class="jumbotron3">
+            <h2>Bahan- bahan </h2>
+             <p><%= recipe.ingredients_recipe %></p>
+        </div>
+        <div class="jumbotron4">
+            <h2>Cara Membuat</h2>
+             <p><%= recipe.instructions_recipe %></p>
+        </div>
+    </div>
+    
+    <h3>Komentar</h3>
+ <% if (userId) { %>
+    <div class="comment-form">
+        <form action="/comments" method="POST">
+            <div class="mb-3">
+                <label for="comment" class="form-label">Tulis Komentar:</label>
+                <input type="text" hidden value="<%= recipe.id_recipe%>" name="recipe_id" id="recipe_id">
+                <input type="text" hidden value="<%= userId %>" name="user_id" id="user_id"> 
+                <input class="form-control" id="content_comment" name="content_comment" rows="3">
             </div>
-        <% }); %>
+            <button type="submit" class="btn btn-dark">Kirim</button>
+        </form>
+    </div>
     <% } else { %>
-        <p>Belum ada komentar untuk resep ini.</p>
+    <div class="comment" style="background-color: #F4C524">
+        <p>Anda harus login untuk menambahkan komentar !!</p>
+        <button class="btn btn-dark" onclick="location.href='/login'">LOGIN</button>
+    </div>
     <% } %>
-
-
-
-     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+   <div class="jumbotron mt-5 mb-5">
+       <% if (recipe.Comments.length > 0) { %>
+       <% recipe.Comments.forEach(comment => { %>
+       <div class="comment">
+           <p><strong><%= comment.User.username %>:</strong> <%= comment.content_comment %></p>
+       </div>
+       <% }); %>
+       <% } else { %>
+       <p>Belum ada komentar untuk resep ini.</p>
+       <% } %>
+   
+        
+   </div>
+   
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js" integrity="sha384-0pUGZvbkm6XF6gxjEnlmuGrJXVbNuzT9qBBavbLwCsOGabYfZo0T0to5eqruptLy" crossorigin="anonymous"></script>
 
     <script>
-  document.addEventListener('DOMContentLoaded', function() {
-  const searchInput = document.getElementById('search-input');
-  const searchButton = document.getElementById('search-button');
-  const recipeCards = document.querySelectorAll('.card');
+        document.addEventListener('DOMContentLoaded', function () {
+            const searchInput = document.getElementById('search-input');
+            const searchButton = document.getElementById('search-button');
+            const recipeCards = document.querySelectorAll('.card');
 
-  const searchRecipes = (searchTerm) => {
-    recipeCards.forEach(card => {
-      const recipeTitle = card.querySelector('.recipe-title').innerText.toLowerCase();
-      const recipeText = card.querySelector('.recipe-text').innerText.toLowerCase();
-      const cardContainer = card.parentElement.parentElement;
+            const searchRecipes = (searchTerm) => {
+                recipeCards.forEach(card => {
+                    const recipeTitle = card.querySelector('.recipe-title').innerText.toLowerCase();
+                    const recipeText = card.querySelector('.recipe-text').innerText.toLowerCase();
+                    const cardContainer = card.parentElement.parentElement;
 
-      if (recipeTitle.includes(searchTerm) || recipeText.includes(searchTerm)) {
-        cardContainer.style.display = 'block';
-      } else {
-        cardContainer.style.display = 'none';
-      }
-    });
-  };
+                    if (recipeTitle.includes(searchTerm) || recipeText.includes(searchTerm)) {
+                        cardContainer.style.display = 'block';
+                    } else {
+                        cardContainer.style.display = 'none';
+                    }
+                });
+            };
 
-  searchInput.addEventListener('input', function() {
-    const searchTerm = searchInput.value.toLowerCase();
-    searchRecipes(searchTerm);
-  });
-});
-
- console.log(recipe.Comments);
-</script> 
+            searchInput.addEventListener('input', function () {
+                const searchTerm = searchInput.value.toLowerCase();
+                searchRecipes(searchTerm);
+            });
+        });
+    </script>
 </body>
 
 </html>

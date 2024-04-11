@@ -59,10 +59,12 @@
             margin-right: 10px;
         }
            .footer {
-            background-color: #F4C524;
+            background-color: #fff;
             color: black;
             text-align: center;
             padding: 20px 0;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+
         }
     </style>
 </head>
@@ -71,9 +73,9 @@
         <h1 class="my-4"><img src="logo.png" alt="Logo" class="logo">Resep Kuy</h1>
         <div class="jumbotron">
             <p>Temukan dan bagikan resep - resep favoritmu dengan komunitas kami.</p>
-            <form class="my-4">
+            <form class="my-4" id="search-form">
                 <div class="input-group">
-                    <input type="text" id="search-input" class="form-control" placeholder="Cari resep..." >
+                    <input type="text" id="search-input" name="search-input" class="form-control" placeholder="Cari resep..." >
                     <button type="submit" id="search-button" class="btn btn-primary">Cari</button>
                 </div>
             </form>
@@ -97,9 +99,56 @@
     </div>
         <footer class="footer">
         <div class="container">
-            <p>&copy; 2024 Cookpad Indonesia - All Rights Reserved</p>
+            <p>&copy; 2024 ResepKuy - All Rights Reserved</p>
         </div>
     </footer>
+
+  <script>
+    document.getElementById('search-form').addEventListener('submit', function(event) {
+        event.preventDefault(); // Mencegah pengiriman formulir secara default
+
+        // Ambil nilai input pencarian
+        const searchTerm = document.getElementById('search-input').value;
+
+        // Lakukan permintaan AJAX
+        const xhr = new XMLHttpRequest();
+        xhr.onreadystatechange = function() {
+            if (xhr.readyState === XMLHttpRequest.DONE) {
+                if (xhr.status === 200) {
+                    // Tangani respon dari server
+                    const response = JSON.parse(xhr.responseText);
+                    // Misalnya, update konten halaman dengan hasil pencarian
+                    updateSearchResults(response);
+                } else {
+                    console.error('Permintaan pencarian gagal');
+                }
+            }
+        };
+
+        // Buat URL pencarian sesuai dengan nilai input
+        const searchUrl = `,/beranda?query=${encodeURIComponent(searchTerm)}`;
+
+        // Kirim permintaan GET ke URL pencarian
+        xhr.open('GET', searchUrl);
+        xhr.send();
+    });
+
+    // Fungsi untuk memperbarui konten halaman dengan hasil pencarian
+    function updateSearchResults(results) {
+        // Misalnya, dapatkan elemen yang akan diperbarui, seperti div dengan ID 'search-results'
+        const searchResultsElement = document.getElementById('search-results');
+
+        // Bersihkan konten yang ada sebelum menambahkan hasil pencarian baru
+        searchResultsElement.innerHTML = '';
+
+        // Tambahkan hasil pencarian baru ke dalam elemen
+        results.forEach(function(result) {
+            const resultItem = document.createElement('div');
+            resultItem.textContent = result.title; // Misalnya, gunakan judul dari hasil pencarian
+            searchResultsElement.appendChild(resultItem);
+        });
+    }
+</script>
 
 </body>
 </html>
