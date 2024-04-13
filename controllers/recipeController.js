@@ -25,7 +25,7 @@ const addRecipe = async (req, res) => {
         instructions_recipe,
         image_recipe,
         category_id,
-        user_id
+        user_id   
     } = req.body;
     try {
         const newRecipe = await Recipe.create({
@@ -196,7 +196,7 @@ const getRecipeDetail = async (req, res) => {
       ],
     });
 
-    if (recipe && categories && userId) {
+    if (recipe && categories) {
         res.render('recipeDetail', { recipe, categories, userId }); // Render halaman detail resep dengan komentar dan kategori
     } else {
       res.status(404).json({ error: 'Resep tidak ditemukan' });
