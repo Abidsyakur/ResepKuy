@@ -1,11 +1,12 @@
 const express = require('express');
 const router = express.Router();
 const {
+    addRecipe,
     getRecipeDetail,
     getAllRecipes,
-    addRecipe,
+    createRecipe,
     getRecipeById,
-    updateRecipe,
+    // updateRecipe,
     deleteRecipe,
 } = require('../controllers/recipeController');
 
@@ -13,7 +14,7 @@ const {
 router.get('/', getAllRecipes);
 
 // Rute untuk menambahkan resep baru
-router.post('/', addRecipe);
+router.post('/add', createRecipe);
 
 // Rute untuk mendapatkan resep berdasarkan ID
 router.get('/:id', getRecipeById);
@@ -21,7 +22,7 @@ router.get('/:id', getRecipeById);
 router.get('/detail/:id', getRecipeDetail);
 
 // Rute untuk mengupdate resep
-router.put('/:id', updateRecipe);
+// router.put('/:id', updateRecipe);
 
 // Rute untuk menghapus resep
 router.delete('/:id', deleteRecipe);

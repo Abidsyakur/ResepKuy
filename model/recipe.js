@@ -1,42 +1,108 @@
-// Import model Comment dan Sequelize dari modul yang sesuai
-const Comment = require('./comments'); // Sesuaikan path sesuai struktur file Anda
-const { Sequelize, DataTypes } = require('sequelize');
+// // Import model Comment dan Sequelize dari modul yang sesuai
+// const Comment = require('./comments'); // Sesuaikan path sesuai struktur file Anda
+// const { Sequelize, DataTypes } = require('sequelize');
 
-// Inisialisasi instance Sequelize baru dengan kredensial database
-const sequelize = new Sequelize('appresep', 'root', '', {
-  host: 'localhost',
-  dialect: 'mysql'
-});
+// // Inisialisasi instance Sequelize baru dengan kredensial database
+// const sequelize = new Sequelize('appresep', 'root', '', {
+//   host: 'localhost',
+//   dialect: 'mysql'
+// });
 
-// Definisikan model Recipe dengan propertinya
-const Recipe = sequelize.define('Recipe', {
-  // properti id_recipe
+// // Definisikan model Recipe dengan propertinya
+// const Recipe = sequelize.define('Recipe', {
+//   // properti id_recipe
+//   id_recipe: {
+//     type: DataTypes.INTEGER,
+//     primaryKey: true,
+//     autoIncrement: true
+//   },
+//   // properti title_recipe
+//   title_recipe: {
+//     type: DataTypes.STRING,
+//     allowNull: false
+//   },
+//   // properti description_recipe
+//   description_recipe: {
+//     type: DataTypes.TEXT,
+//     allowNull: false
+//   },
+//   // properti ingredients_recipe
+//   ingredients_recipe: {
+//     type: DataTypes.TEXT,
+//     allowNull: false
+//   },
+//   // properti instructions_recipe
+//   instructions_recipe: {
+//     type: DataTypes.TEXT,
+//     allowNull: false
+//   },
+//   // properti image_recipe
+//   image_recipe: {
+//     type: DataTypes.STRING,
+//     allowNull: true
+//   },
+//   // properti category_id
+//   category_id: {
+//     type: DataTypes.INTEGER,
+//     allowNull: false
+//   },
+//   // properti user_id
+//   user_id: {
+//     type: DataTypes.INTEGER,
+//     allowNull: false
+//   },
+//   // properti createdAt
+//   createdAt: {
+//     type: DataTypes.DATE,
+//     defaultValue: Sequelize.literal('CURRENT_TIMESTAMP')
+//   },
+//   // properti updatedAt
+//   updatedAt: {
+//     type: DataTypes.DATE,
+//     defaultValue: Sequelize.literal('CURRENT_TIMESTAMP'),
+//     allowNull: false
+//   }
+// }, {
+//   // Nonaktifkan timestamps untuk model Recipe
+//    sequelize,
+//   modelName: 'Recipe'
+// });
+
+
+// Recipe.hasMany(Comment, { foreignKey: 'recipe_id' }); // Assuming a recipe can have multiple comments
+
+
+// // Ekspor model Recipe
+// module.exports = Recipe;
+
+const { Model, DataTypes } = require('sequelize');
+const sequelize = require('../config');
+const Comment = require('../model/comments');
+
+class Recipe extends Model {}
+
+Recipe.init({
   id_recipe: {
     type: DataTypes.INTEGER,
     primaryKey: true,
-    autoIncrement: true
+    autoIncrement: true,
   },
-  // properti title_recipe
   title_recipe: {
     type: DataTypes.STRING,
-    allowNull: false
+    allowNull: false,
   },
-  // properti description_recipe
   description_recipe: {
     type: DataTypes.TEXT,
-    allowNull: false
+    allowNull: false,
   },
-  // properti ingredients_recipe
   ingredients_recipe: {
     type: DataTypes.TEXT,
-    allowNull: false
+    allowNull: false,
   },
-  // properti instructions_recipe
   instructions_recipe: {
     type: DataTypes.TEXT,
-    allowNull: false
+    allowNull: false,
   },
-  // properti image_recipe
   image_recipe: {
     type: DataTypes.STRING,
     allowNull: true
@@ -51,26 +117,39 @@ const Recipe = sequelize.define('Recipe', {
     type: DataTypes.INTEGER,
     allowNull: false
   },
-  // properti createdAt
+  // pro
   createdAt: {
     type: DataTypes.DATE,
-    defaultValue: Sequelize.literal('CURRENT_TIMESTAMP')
+    allowNull: false,
+    defaultValue: DataTypes.NOW,
   },
-  // properti updatedAt
   updatedAt: {
     type: DataTypes.DATE,
-    defaultValue: Sequelize.literal('CURRENT_TIMESTAMP'),
-    allowNull: false
-  }
+    allowNull: false,
+    defaultValue: DataTypes.NOW,
+  },
 }, {
-  // Nonaktifkan timestamps untuk model Recipe
-   sequelize,
-  modelName: 'Recipe'
+  sequelize,
+  modelName: 'Recipe',
 });
 
+// Recipe.hasMany(Comment, {
+//   foreignKey: 'recipeId',
+//   as: 'comments',
+// });
+
+// Recipe.belongsToMany(Category, {
+//   through: 'RecipeCategories',
+//   foreignKey: 'recipeId',
+//   as: 'categories',
+// });
+
+// Recipe.belongsTo(User, {
+//   foreignKey: 'id_user',
+//   as: 'user',
+// });
 
 Recipe.hasMany(Comment, { foreignKey: 'recipe_id' }); // Assuming a recipe can have multiple comments
 
 
-// Ekspor model Recipe
 module.exports = Recipe;

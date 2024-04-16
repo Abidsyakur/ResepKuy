@@ -16,34 +16,51 @@ const getAllRecipes = async (req, res) => {
     }
 };
 
-// Fungsi untuk menambahkan resep baru
-const addRecipe = async (req, res) => {
-    const {
-        title_recipe,
-        description_recipe,
-        ingredients_recipe,
-        instructions_recipe,
-        image_recipe,
-        category_id,
-        user_id   
-    } = req.body;
-    try {
-        const newRecipe = await Recipe.create({
-            title_recipe,
-            description_recipe,
-            ingredients_recipe,
-            instructions_recipe,
-            image_recipe,
-            category_id,
-            user_id
-        });
-       res.redirect('/dashboard');
-    } catch (error) {
-        res.status(500).json({
-            error: 'Gagal menambahkan resep',
-            message: error.message
-        });
-    }
+// // Fungsi untuk menambahkan resep baru
+// const addRecipe = async (req, res) => {
+//     const {
+//         title_recipe,
+//         description_recipe,
+//         ingredients_recipe,
+//         instructions_recipe,
+//         image_recipe,
+//         category_id,
+//         user_id   
+//     } = req.body;
+//     try {
+//         const newRecipe = await Recipe.create({
+//             title_recipe,
+//             description_recipe,
+//             ingredients_recipe,
+//             instructions_recipe,
+//             image_recipe,
+//             category_id,
+//             user_id
+//         });
+//        res.redirect('/dashboard');
+//     } catch (error) {
+//         res.status(500).json({
+//             error: 'Gagal menambahkan resep',
+//             message: error.message
+//         });
+//     }
+// };
+// ...
+const createRecipe = async (req, res) => {
+  try {
+    const newRecipe = await Recipe.create({
+      title_recipe: req.body.title_recipe,
+      description_recipe: req.body.description_recipe,
+      ingredients_recipe: req.body.ingredients_recipe,
+      instructions_recipe: req.body.instructions_recipe,
+      image_recipe: req.body.image_recipe,
+      category_id: req.body.category_id,
+      user_id: req.body.user_id,
+    });
+    res.status(201).json(newRecipe);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
 };
 
 // Fungsi untuk mendapatkan resep berdasarkan ID
@@ -95,49 +112,49 @@ const getRecipeById = async (req, res) => {
     }
 };
 
-// Fungsi untuk mengupdate resep
-const updateRecipe = async (req, res) => {
-    const {
-        id
-    } = req.params;
-    const {
-        title_recipe,
-        description_recipe,
-        ingredients_recipe,
-        instructions_recipe,
-        image_recipe,
-        category_id,
-        user_id
+// // Fungsi untuk mengupdate resep
+// const updateRecipe = async (req, res) => {
+//     const {
+//         id
+//     } = req.params;
+//     const {
+//         title_recipe,
+//         description_recipe,
+//         ingredients_recipe,
+//         instructions_recipe,
+//         image_recipe,
+//         category_id,
+//         user_id
 
-    } = req.body;
-    try {
-        const recipeToUpdate = await Recipe.findByPk(id);
-        if (recipeToUpdate) {
-            recipeToUpdate.title_recipe = title_recipe || recipeToUpdate.title_recipe;
-            recipeToUpdate.description_recipe = description_recipe || recipeToUpdate.description_recipe;
-            recipeToUpdate.ingredients_recipe = ingredients_recipe || recipeToUpdate.ingredients_recipe;
-            recipeToUpdate.instructions_recipe = instructions_recipe || recipeToUpdate.instructions_recipe;
-            recipeToUpdate.image_recipe = image_recipe || recipeToUpdate.image_recipe;
-            recipeToUpdate.category_id = category_id || recipeToUpdate.category_id;
-            recipeToUpdate.user_id = user_id || recipeToUpdate.user_id;
+//     } = req.body;
+//     try {
+//         const recipeToUpdate = await Recipe.findByPk(id);
+//         if (recipeToUpdate) {
+//             recipeToUpdate.title_recipe = title_recipe || recipeToUpdate.title_recipe;
+//             recipeToUpdate.description_recipe = description_recipe || recipeToUpdate.description_recipe;
+//             recipeToUpdate.ingredients_recipe = ingredients_recipe || recipeToUpdate.ingredients_recipe;
+//             recipeToUpdate.instructions_recipe = instructions_recipe || recipeToUpdate.instructions_recipe;
+//             recipeToUpdate.image_recipe = image_recipe || recipeToUpdate.image_recipe;
+//             recipeToUpdate.category_id = category_id || recipeToUpdate.category_id;
+//             recipeToUpdate.user_id = user_id || recipeToUpdate.user_id;
             
-            await recipeToUpdate.save();
-            res.status(200).json({
-                message: 'Resep berhasil diperbarui',
-                recipe: recipeToUpdate
-            });
-        } else {
-            res.status(404).json({
-                error: 'Resep tidak ditemukan'
-            });
-        }
-    } catch (error) {
-        res.status(500).json({
-            error: 'Gagal mengupdate resep',
-            message: error.message
-        });
-    }
-};
+//             await recipeToUpdate.save();
+//             res.status(200).json({
+//                 message: 'Resep berhasil diperbarui',
+//                 recipe: recipeToUpdate
+//             });
+//         } else {
+//             res.status(404).json({
+//                 error: 'Resep tidak ditemukan'
+//             });
+//         }
+//     } catch (error) {
+//         res.status(500).json({
+//             error: 'Gagal mengupdate resep',
+//             message: error.message
+//         });
+//     }
+// };
 
 // Fungsi untuk menghapus resep
 const deleteRecipe = async (req, res) => {
@@ -212,9 +229,9 @@ const getRecipeDetail = async (req, res) => {
 
 module.exports = {
     getAllRecipes,
-    addRecipe,
+    createRecipe,
     getRecipeById,
-    updateRecipe,
+    // updateRecipe,
     deleteRecipe,
     getRecipeDetail
 };
