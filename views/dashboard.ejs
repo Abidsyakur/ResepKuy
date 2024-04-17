@@ -108,34 +108,34 @@
             </div>
             <div class="modal-body">
               <div class="mb-3">
-              <form action="/recipes" method="POST" enctype="multipart/form-data">
+              <form action="/recipes/" method="POST" enctype="multipart/form-data">
                 <label for="title_recipe"  name="title_recipe" class="form-label">Nama Resep : </label>
                 <input type="text" class="form-control" name="title_recipe" id="title_recipe" placeholder="masukkan nama resep anda">
               </div>
               <div class="mb-3">
                 <label for="description_recipe" name="description_recipe" class="form-label">Deskripsi Resep : </label>
-                <textarea class="form-control" id="description_recipe "  name="description_recipe" rows="3"></textarea>
+                <input type="text" class="form-control" id="description_recipe "  name="description_recipe" rows="3">
               </div>
               <div class="mb-3">
                 <label for="ingredients_recipe" name="ingredients_recipe" class="form-label">Bahan Bahan : </label>
-                <textarea class="form-control" id="ingredients_recipe"  name="ingredients_recipe" rows="3"></textarea>
+                <input type="text" class="form-control" id="ingredients_recipe"  name="ingredients_recipe" rows="3">
               </div>
               <div class="mb-3">
                 <label for="instructions_recipe" name="instructions_recipe" class="form-label">Langkah Pembuatan : </label>
-                <textarea class="form-control" id="instructions_recipe"  name="instructions_recipe" rows="3"></textarea>
+                <input type="text" class="form-control" id="instructions_recipe"  name="instructions_recipe" rows="3">
               </div>
               <div class="mb-3">
                 <label for="formFile" name="image_recipe" class="form-label">Masukkan foto resep : </label>
-                <input class="form-control" type="file" name="image_recipe" id="formFile">
+                <input class="form-control" type="file" id="image_recipe" name="image_recipe" id="formFile">
               </div>  
-            <select class="form-select" aria-label="Default select example" name="category_id">
+            <select class="form-select" aria-label="Default select example" id="category_id" name="category_id">
               <option selected>Pilih kategori resep</option>
               <% categories.forEach(categori => { %>
                 <option value="<%= categori.id_categori %>"><%= categori.name_categori%></option>
               <% }); %>
             </select>
 
-            <input type="hidden" id="user_id" name="user_id" value="<%= id_user %>">
+            <input hidden  id="user_id" name="user_id" value="<%= id_user %>">
               <button type="submit" class="btn btn-dark">Submit</button>
             </form>
               

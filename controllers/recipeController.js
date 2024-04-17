@@ -16,35 +16,32 @@ const getAllRecipes = async (req, res) => {
     }
 };
 
-// Fungsi untuk menambahkan resep baru
+
+// Function to add a new recipe
 const addRecipe = async (req, res) => {
-    const {
-        title_recipe,
-        description_recipe,
-        ingredients_recipe,
-        instructions_recipe,
-        image_recipe,
-        category_id,
-        user_id   
-    } = req.body;
-    try {
-        const newRecipe = await Recipe.create({
-            title_recipe,
-            description_recipe,
-            ingredients_recipe,
-            instructions_recipe,
-            image_recipe,
-            category_id,
-            user_id
-        });
-       res.redirect('/dashboard');
-    } catch (error) {
-        res.status(500).json({
-            error: 'Gagal menambahkan resep',
-            message: error.message
-        });
-    }
+  try {
+    const { title_recipe, description_recipe, ingredients_recipe, instructions_recipe, image_recipe, category_id, user_id } = req.body;
+
+    // Create a new recipe in the database
+    const newRecipe = await Recipe.create({
+      title_recipe,
+      description_recipe,
+      ingredients_recipe,
+      instructions_recipe,
+      image_recipe,
+      category_id,
+      user_id,
+    });
+
+    // Send a success response with the created recipe
+    res.status(201).json({ message: 'Recipe created successfully', recipe: newRecipe });
+  } catch (error) {
+    console.error('Error creating recipe:', error);
+    res.status(500).json({ error: 'Internal server error' });
+  }
 };
+
+
 
 // Fungsi untuk mendapatkan resep berdasarkan ID
 const getRecipeById = async (req, res) => {
@@ -164,21 +161,6 @@ const deleteRecipe = async (req, res) => {
         });
     }
 };
-// const getRecipeDetail = async (req, res) => {
-//     try {
-//         const recipe = await Recipe.findByPk(req.params.id);
-//         const categories = await Category.findAll(); // Assuming you have a Category modelif (recipe && categories) {
-        //     res.render('recipeDetail', { recipe, categories });
-        // } else {
-        //     res.status(404).json({ error: 'Resep tidak ditemukan' });
-        // }
-//         if (recipe && categories) {
-//             res.render('recipeDetail', { recipe, categories });
-//         } else {
-//             res.status(404).json({ error: 'Resep tidak ditemukan' });
-//         }
-//     } catch (error) {
-//         res.status(500).json({ error: 'Gagal mendapatkan data resep', message: error.message });
 
 const getRecipeDetail = async (req, res) => {
   try {
@@ -211,8 +193,8 @@ const getRecipeDetail = async (req, res) => {
 
 
 module.exports = {
-    getAllRecipes,
     addRecipe,
+    getAllRecipes,
     getRecipeById,
     updateRecipe,
     deleteRecipe,
