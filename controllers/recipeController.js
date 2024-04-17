@@ -16,30 +16,6 @@ const getAllRecipes = async (req, res) => {
     }
 };
 
-<<<<<<< HEAD
-
-// Function to add a new recipe
-const addRecipe = async (req, res) => {
-  try {
-    const { title_recipe, description_recipe, ingredients_recipe, instructions_recipe, image_recipe, category_id, user_id } = req.body;
-
-    // Create a new recipe in the database
-    const newRecipe = await Recipe.create({
-      title_recipe,
-      description_recipe,
-      ingredients_recipe,
-      instructions_recipe,
-      image_recipe,
-      category_id,
-      user_id,
-    });
-
-    // Send a success response with the created recipe
-    res.status(201).json({ message: 'Recipe created successfully', recipe: newRecipe });
-  } catch (error) {
-    console.error('Error creating recipe:', error);
-    res.status(500).json({ error: 'Internal server error' });
-=======
 // // Fungsi untuk menambahkan resep baru
 // const addRecipe = async (req, res) => {
 //     const {
@@ -84,7 +60,6 @@ const createRecipe = async (req, res) => {
     res.status(201).json(newRecipe);
   } catch (error) {
     res.status(500).json({ message: error.message });
->>>>>>> e5a233bec20b25a1746fbc2092324622b2ea5687
   }
 };
 
@@ -240,15 +215,26 @@ const getRecipeDetail = async (req, res) => {
 
 
 module.exports = {
-<<<<<<< HEAD
-    addRecipe,
+    // addRecipe
     getAllRecipes,
-=======
     getAllRecipes,
     createRecipe,
->>>>>>> e5a233bec20b25a1746fbc2092324622b2ea5687
     getRecipeById,
     // updateRecipe,
     deleteRecipe,
     getRecipeDetail
 };
+// exports.createRecipe = async (req, res) => {
+//   try {
+//     const recipe = await Recipe.create(req.body);
+//     res.status(201).json({
+//       message: 'Recipe created successfully',
+//       recipe
+//     });
+//   } catch (error) {
+//     res.status(500).json({
+//       message: 'Error creating recipe',
+//       error
+//     });
+//   }
+// };

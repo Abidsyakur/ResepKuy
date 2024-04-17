@@ -1,13 +1,12 @@
 const express = require('express');
 const router = express.Router();
 const {
-    addRecipe,
+    // addRecipe,
     getRecipeDetail,
     getAllRecipes,
     createRecipe,
     getRecipeById,
     // updateRecipe,
-    deleteRecipe,
 } = require('../controllers/recipeController');
 
 // Rute untuk mendapatkan semua resep
@@ -25,6 +24,5 @@ router.get('/detail/:id', getRecipeDetail);
 // router.put('/:id', updateRecipe);
 
 // Rute untuk menghapus resep
-router.delete('/:id', deleteRecipe);
 
 module.exports = router;

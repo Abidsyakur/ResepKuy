@@ -27,11 +27,7 @@
     "multer": "^1.4.5-lts.1",
     "mysql2": "^3.9.4",
     "pg": "^8.11.5",
-<<<<<<< HEAD
-    "sequelize": "^6.37.3"
-=======
-    "sequelize": "^6.37.2",
+    "sequelize": "^6.37.3",
     "sequelize-mysql": "^1.7.0"
->>>>>>> e5a233bec20b25a1746fbc2092324622b2ea5687
   }
 }
