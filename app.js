@@ -28,16 +28,23 @@ app.use((req, res, next) => {
     res.locals.userId = req.session.userId;
     next();
 });
+
 // Atur rute untuk homepage
-app.get('/', async (req, res) => {
-  // Ambil data recipes dari database
-  const recipes = await Recipe.findAll();
-  console.log('Data Resep:', recipes);
-  // Kirim data recipes ke template EJS
-  res.render('index', {
-    recipes
-  });
+app.get('/home', async (req, res) => {
+  try {
+    // Ambil data recipes dari database
+    const recipes = await Recipe.findAll();
+    console.log('Data Resep:', recipes);
+    // Kirim data recipes ke template EJS
+    res.render('beranda', {
+      recipes
+    });
+  } catch (error) {
+    console.error(error);
+    res.status(500).send('Internal Server Error');
+  }
 });
+
 app.get('/login', (req, res) => {
   res.render('login'); // Halaman login
 });
@@ -46,21 +53,6 @@ app.get('/register', (req, res) => {
   res.render('register'); // Halaman registrasi
 });
 
-
-
-
-
-
-
-app.get('/beranda', async (req, res) => {
-  // Ambil data recipes dari database
-  const recipes = await Recipe.findAll();
-  console.log('Data Resep:', recipes);
-  // Kirim data recipes ke template EJS
-  res.render('beranda', {
-    recipes
-  });
-});
 app.get('/dashboard', async (req, res) => {
   // Ambil data recipes dari database
   const recipes = await Recipe.findAll();
