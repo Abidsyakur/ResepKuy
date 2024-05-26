@@ -3,7 +3,7 @@ const User = require('../model/users');
 
 exports.register = [
   body('email').isEmail().withMessage('Email tidak valid'),
-  body('password').isLength({ min: 6 }).withMessage('Password harus lebih dari 6 karakter'),
+  body('password').isLength({ min: 4 }).withMessage('Password harus lebih dari 6 karakter'),
   body('username').isLength({ min: 1 }).withMessage('Username harus lebih dari 1 karakter'),
   (req, res) => {
     const errors = validationResult(req);
@@ -34,7 +34,7 @@ exports.register = [
 
 exports.login = [
   body('email').isEmail().withMessage('Email tidak valid'),
-  body('password').isLength({ min: 6 }).withMessage('Password harus lebih dari 6 karakter'),
+  body('password').isLength({ min: 4 }).withMessage('Password harus lebih dari 6 karakter'),
   (req, res) => {
     const errors = validationResult(req);
     if (!errors.isEmpty()) {

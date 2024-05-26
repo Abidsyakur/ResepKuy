@@ -46,22 +46,64 @@ const getAllRecipes = async (req, res) => {
 //     }
 // };
 // ...
+const multer = require('multer');
+
+const storage = multer.diskStorage({
+  destination: (req, file, cb) => {
+    cb(null, './public/uploads/');
+  },
+  filename: (req, file, cb) => {
+    cb(null, `${Date.now()}-${file.originalname}`);
+  }
+});
+
+const upload = multer({ storage: storage });
+
 const createRecipe = async (req, res) => {
   try {
-    const newRecipe = await Recipe.create({
-      title_recipe: req.body.title_recipe,
-      description_recipe: req.body.description_recipe,
-      ingredients_recipe: req.body.ingredients_recipe,
-      instructions_recipe: req.body.instructions_recipe,
-      image_recipe: req.body.image_recipe,
-      category_id: req.body.category_id,
-      user_id: req.body.user_id,
+    // Use upload.single as middleware for handling file uploads
+    upload.single('image_recipe')(req, res, async (err) => {
+      if (err) {
+        return res.status(400).json({
+          error: "Gagal menambahkan resep",
+          message: "Error uploading file",
+        });
+      }
+
+      const { title_recipe, description_recipe, ingredients_recipe, instructions_recipe, category_id, user_id } = req.body;
+
+      if (!title_recipe ||!description_recipe ||!ingredients_recipe ||!instructions_recipe) {
+        return res.status(400).json({
+          error: "Gagal menambahkan resep",
+          message: "Semua field resep harus diisi",
+        });
+      }
+
+      // Ensure that the image_recipe attribute is set to the filename of the uploaded image
+      const recipe = await Recipe.create({
+        title_recipe,
+        description_recipe,
+        ingredients_recipe,
+        instructions_recipe,
+        image_recipe: req.file ? req.file.filename : null, // Assign the filename or null if no file was uploaded
+        category_id,
+        user_id,
+      });
+
+      res.status(201).json({
+        message: "Berhasil menambahkan resep",
+        data: recipe,
+      });
     });
-    res.status(201).json(newRecipe);
   } catch (error) {
-    res.status(500).json({ message: error.message });
+    res.status(500).json({
+      error: "Gagal menambahkan resep",
+      message: error.message,
+    });
   }
 };
+
+
 
 // Fungsi untuk mendapatkan resep berdasarkan ID
 const getRecipeById = async (req, res) => {
@@ -181,21 +223,6 @@ const deleteRecipe = async (req, res) => {
         });
     }
 };
-// const getRecipeDetail = async (req, res) => {
-//     try {
-//         const recipe = await Recipe.findByPk(req.params.id);
-//         const categories = await Category.findAll(); // Assuming you have a Category modelif (recipe && categories) {
-        //     res.render('recipeDetail', { recipe, categories });
-        // } else {
-        //     res.status(404).json({ error: 'Resep tidak ditemukan' });
-        // }
-//         if (recipe && categories) {
-//             res.render('recipeDetail', { recipe, categories });
-//         } else {
-//             res.status(404).json({ error: 'Resep tidak ditemukan' });
-//         }
-//     } catch (error) {
-//         res.status(500).json({ error: 'Gagal mendapatkan data resep', message: error.message });
 
 const getRecipeDetail = async (req, res) => {
   try {
@@ -228,6 +255,8 @@ const getRecipeDetail = async (req, res) => {
 
 
 module.exports = {
+    // addRecipe
+    getAllRecipes,
     getAllRecipes,
     createRecipe,
     getRecipeById,
@@ -235,3 +264,17 @@ module.exports = {
     deleteRecipe,
     getRecipeDetail
 };
+// exports.createRecipe = async (req, res) => {
+//   try {
+//     const recipe = await Recipe.create(req.body);
+//     res.status(201).json({
+//       message: 'Recipe created successfully',
+//       recipe
+//     });
+//   } catch (error) {
+//     res.status(500).json({
+//       message: 'Error creating recipe',
+//       error
+//     });
+//   }
+// };

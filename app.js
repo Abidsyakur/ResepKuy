@@ -3,8 +3,11 @@ const session = require('express-session');
 const bodyParser = require('body-parser');
 const path = require('path');
 const app = express();
+const { Op } = require('sequelize');
 const Recipe = require('./model/recipe');
 const Category = require('./model/categories');
+
+
 
 
 // Middleware
@@ -121,14 +124,12 @@ const userRoutes = require('./Routes/userRoutes');
 const recipeRoutes = require('./Routes/recipeRoutes');
 const categoryRoutes = require('./Routes/categoryRoutes');
 const commentRoutes = require('./Routes/commentRoutes');
-const ratingRoutes = require('./Routes/ratingRoutes');
 
 // app.use('/', indexRoutes);
 app.use('/users', userRoutes);
 app.use('/recipes', recipeRoutes);
 app.use('/categories', categoryRoutes);
 app.use('/comments', commentRoutes);
-app.use('/rating', ratingRoutes);
 
 // Server Setup
 const PORT = process.env.PORT || 3000;

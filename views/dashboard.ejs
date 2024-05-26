@@ -104,40 +104,41 @@
           <div class="modal-content">
             <div class="modal-header">
               <h1 class="modal-title fs-5" id="exampleModalLabel">Resep</h1>
-              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">pi</button>
             </div>
             <div class="modal-body">
               <div class="mb-3">
-               <form action="/recipes/add" method="POST" enctype="multipart/form-data">
-            <div class="mb-3">
-              <label for="title_recipe" name="title_recipe" class="form-label">Nama Resep : </label>
-              <input type="text" class="form-control" name="title_recipe" id="title_recipe" placeholder="masukkan nama resep anda" required>
-            </div>
-            <div class="mb-3">
-              <label for="description_recipe" name="description_recipe" class="form-label">Deskripsi Resep : </label>
-              <input type="text" class="form-control" id="description_recipe" name="description_recipe" rows="3" required>
-            </div>
-            <div class="mb-3">
-              <label for="ingredients_recipe" name="ingredients_recipe" class="form-label">Bahan Bahan : </label>
-              <input type="text" class="form-control" id="ingredients_recipe" name="ingredients_recipe" rows="3" required>
-            </div>
-            <div class="mb-3">
-              <label for="instructions_recipe" name="instructions_recipe" class="form-label">Langkah Pembuatan : </label>
-              <input type="text" class="form-control" id="instructions_recipe" name="instructions_recipe" rows="3" required>
-            </div>
-            <div class="mb-3">
-              <label for="image_recipe" name="image_recipe" class="form-label">Masukkan foto resep : </label>
-              <input type="file" class="form-control" type="file" name="image_recipe" id="image_recipe">
-            </div>
-            <select class="form-select" aria-label="Default select example" name="category_id" required>
+              <form action="/recipes/createrecipe" method="POST" enctype="multipart/form-data">
+                <label for="title_recipe"  name="title_recipe" class="form-label">Nama Resep : </label>
+                <input type="text" class="form-control" name="title_recipe" id="title_recipe" placeholder="masukkan nama resep anda">
+              </div>
+              <div class="mb-3">
+                <label for="description_recipe" name="description_recipe" class="form-label">Deskripsi Resep : </label>
+                <input type="text" class="form-control" id="description_recipe "  name="description_recipe" rows="3">
+              </div>
+              <div class="mb-3">
+                <label for="ingredients_recipe" name="ingredients_recipe" class="form-label">Bahan Bahan : </label>
+                <input type="text" class="form-control" id="ingredients_recipe"  name="ingredients_recipe" rows="3">
+              </div>
+              <div class="mb-3">
+                <label for="instructions_recipe" name="instructions_recipe" class="form-label">Langkah Pembuatan : </label>
+                <input type="text" class="form-control" id="instructions_recipe"  name="instructions_recipe" rows="3">
+              </div>
+              <div class="mb-3">
+                <label for="formFile" name="image_recipe" class="form-label">Masukkan foto resep : </label>
+                <input class="form-control" type="file" id="image_recipe" name="image_recipe" id="formFile">
+              </div>  
+            <select class="form-select" aria-label="Default select example" id="category_id" name="category_id">
               <option selected>Pilih kategori resep</option>
               <% categories.forEach(categori => { %>
                 <option value="<%= categori.id_categori %>"><%= categori.name_categori%></option>
               <% }); %>
             </select>
-            <input hidden id="user_id" name="user_id" value="<%= id_user %>" required>
-            <button type="submit" class="btn btn-dark">Submit</button>
-          </form>
+
+            <input hidden  id="user_id" name="user_id" value="<%= id_user %>">
+              <button type="submit" class="btn btn-dark">Submit</button>
+            </form>
+              
             </div>
             <div class="modal-footer">
               <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
