@@ -39,8 +39,9 @@ const User = require('./users'); // Import the User model
 // Comment.belongsTo(User, { foreignKey: 'user_id' }); // Associate Comment with User
 
 // module.exports = Comment;
-const { Model, DataTypes } = require('sequelize');
+const { Model,Sequelize, DataTypes } = require('sequelize');
 const sequelize = require('../config');
+const Recipe = require('./recipe'); // Import the Recipe model
 
 
 class Comment extends Model {}
@@ -71,6 +72,6 @@ Comment.init({
 });
 
 Comment.belongsTo(User, { foreignKey: 'user_id' }); // Associate Comment with User
-
+// Comment.belongsTo(Recipe, { foreignKey: 'recipe_id' })
 
 module.exports = Comment;

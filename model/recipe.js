@@ -77,7 +77,7 @@
 
 const { Model, DataTypes } = require('sequelize');
 const sequelize = require('../config.js');
-
+const Comment = require('../model/comments');
 const User = require('./users');
 const Category = require('./categories');
 
@@ -153,5 +153,6 @@ Recipe.init({
 
 Recipe.belongsTo(Category, { foreignKey: 'category_id' });
 Recipe.belongsTo(User, { foreignKey: 'user_id' });
+Recipe.hasMany(Comment, { foreignKey: 'recipe_id' }); // Assuming a recipe can have multiple comments
 
 module.exports = Recipe;

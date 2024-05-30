@@ -50,11 +50,6 @@ app.get('/register', (req, res) => {
 });
 
 
-
-
-
-
-
 app.get('/beranda', async (req, res) => {
   // Ambil data recipes dari database
   const recipes = await Recipe.findAll();
