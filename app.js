@@ -7,9 +7,6 @@ const { Op } = require('sequelize');
 const Recipe = require('./model/recipe');
 const Category = require('./model/categories');
 
-
-
-
 // Middleware
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
@@ -56,19 +53,6 @@ app.get('/register', (req, res) => {
   res.render('register'); // Halaman registrasi
 });
 
-<<<<<<< HEAD
-
-app.get('/beranda', async (req, res) => {
-  // Ambil data recipes dari database
-  const recipes = await Recipe.findAll();
-  console.log('Data Resep:', recipes);
-  // Kirim data recipes ke template EJS
-  res.render('beranda', {
-    recipes
-  });
-});
-=======
->>>>>>> a0c4445617ce4c806aced6af659eee1619c139d4
 app.get('/dashboard', async (req, res) => {
   // Ambil data recipes dari database
   const recipes = await Recipe.findAll();
