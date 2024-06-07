@@ -253,7 +253,6 @@ const getRecipeDetail = async (req, res) => {
   }
 };
 
-
 module.exports = {
     // addRecipe
     getAllRecipes,
